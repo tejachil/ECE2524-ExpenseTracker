@@ -14,27 +14,37 @@ args = vars(parser.parse_args())
 
 
 if (args['add']):
-	for line in fileinput.input("./datafiles/roomates"):
+	for line in fileinput.input("./datafiles/roommates"):
 		if args['add'] == line.strip():
 			print "already exists"
 			sys.exit(0)
-	open("./datafiles/roomates", "a").write(args['add']+'\n')
+	open("./datafiles/roommates", "a").write(args['add']+'\n')
 	
 
 if (args['remove']):
 	exists = False;
-	for line in fileinput.input("./datafiles/roomates"):
-		lines = f.readlines()
-		if line == args['remove']:
+	f = open("./datafiles/roommates", "r")
+	for line in f:
+		#lines = f.readlines()
+		if line.strip() == args['remove']:
 			exists = True
 			break
 	if not exists:
 		print "Roommate does not exist"
+		
+	f.close()
+	f = open("./datafiles/roommates", "r")
+	#data = f.readlines()
+	#print data
+	data = ""
+	for line in f:
+		if not (args['remove'] == line.strip()):
+			data += line
+	print data
+	f.close()
+	open("./datafiles/roommates", "w").write(data)
 	
 	
-	for line in fileinput.input("./datafiles/roomates"):
-		if not args['remove'] == line.strip():
-			f.write(line)
 			
 			
 			
