@@ -24,8 +24,8 @@ debted = args['debted_roommate']
 # for line in fileinput.input("./datafiles/roomates"):
 
 while (count < len(debted)):
-	print (debted[count] + ' OWES ' + args['expensed_roommate'] + ' $' + str("%.2f" % amount_owed) + '\n')
-	open("./datafiles/expenses", "a").write(debted[count] + ' OWES ' + args['expensed_roommate'] + ' $' + str("%.2f" % amount_owed) + '\n')
+	print (debted[count] + ' OWES ' + args['expensed_roommate'] + ' $' + str("%.2f" % amount_owed))
+	open("./datafiles/expenses", "a").write(debted[count] + '\tOWES\t' + args['expensed_roommate'] + '\t$' + str("%.2f" % amount_owed) + '\n')
 	count = count + 1
 
 
