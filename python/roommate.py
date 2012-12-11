@@ -1,24 +1,25 @@
+#!/usr/bin/env python2
+
 import sys
 import argparse
 import fileinput
 
 parser = argparse.ArgumentParser(description='Roommates')
-parser.add_argument('-a', '--add', help='add new roommates')
-parser.add_argument('-r', '--remove', help='remove roommates')
+parser.add_argument('-a', '--add', help='add new roommate')
+parser.add_argument('-r', '--remove', help='remove roommate')
 
 args = vars(parser.parse_args())
-
 
 #check if args['add'] != 'None' write to the file
 #check for the name if the name exists throw error
 
-
 if (args['add']):
 	for line in fileinput.input("./datafiles/roommates"):
 		if args['add'] == line.strip():
-			print "already exists"
+			print "'" + args['add'] + "' already exists in roommates datafile."
 			sys.exit(0)
 	open("./datafiles/roommates", "a").write(args['add']+'\n')
+	print "Successfully added " + args['add'] + "."
 	
 
 if (args['remove']):
@@ -30,7 +31,7 @@ if (args['remove']):
 			exists = True
 			break
 	if not exists:
-		print "Roommate does not exist"
+		print "'" + args['remove'] + "' does not exist in roommates datafile."
 		
 	f.close()
 	f = open("./datafiles/roommates", "r")
@@ -40,7 +41,6 @@ if (args['remove']):
 	for line in f:
 		if not (args['remove'] == line.strip()):
 			data += line
-	print data
 	f.close()
 	open("./datafiles/roommates", "w").write(data)
 	
