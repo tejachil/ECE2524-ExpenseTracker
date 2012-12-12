@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(roommateProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(roommateOut()));
     connect(expenseProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(expenseOut()));
     refreshUI();
+    setWindowTitle("Roommate Expense Tracker");
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +37,7 @@ void MainWindow::roommateOut(){
     switch(roommateComm){
     case ALL:
         ui->listRoommates->clear();
+        ui->listExpense->clear();
         ui->comboPaidRoommate->clear();
         ui->comboViewExpense->clear();
         roommates = newData.split(QRegExp("[\r\n]"),QString::SkipEmptyParts);
