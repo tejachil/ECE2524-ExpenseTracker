@@ -3,6 +3,9 @@
 import sys
 import argparse
 import fileinput
+import os, inspect
+
+path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 parser = argparse.ArgumentParser(description='Roommates')
 parser.add_argument('-a', '--add', help='add new roommate')
@@ -13,18 +16,22 @@ args = vars(parser.parse_args())
 #check if args['add'] != 'None' write to the file
 #check for the name if the name exists throw error
 
+print args
+
 if (args['add']):
-	for line in fileinput.input("./datafiles/roommates"):
+	print "IM HERE"
+	for line in fileinput.input(path + "/datafiles/roommates"):
 		if args['add'] == line.strip():
 			print "'" + args['add'] + "' already exists in roommates datafile."
 			sys.exit(0)
-	open("./datafiles/roommates", "a").write(args['add']+'\n')
+	print "here"
+	open(path +"/datafiles/roommates", "a").write(args['add']+'\n')
 	print "Successfully added " + args['add'] + "."
 	
 
 if (args['remove']):
 	exists = False;
-	f = open("./datafiles/roommates", "r")
+	f = open(path +"/datafiles/roommates", "r")
 	for line in f:
 		#lines = f.readlines()
 		if line.strip() == args['remove']:
@@ -34,7 +41,7 @@ if (args['remove']):
 		print "'" + args['remove'] + "' does not exist in roommates datafile."
 		
 	f.close()
-	f = open("./datafiles/roommates", "r")
+	f = open(path + "/datafiles/roommates", "r")
 	#data = f.readlines()
 	#print data
 	data = ""
@@ -42,7 +49,7 @@ if (args['remove']):
 		if not (args['remove'] == line.strip()):
 			data += line
 	f.close()
-	open("./datafiles/roommates", "w").write(data)
+	open(path + "/datafiles/roommates", "w").write(data)
 	
 	
 			

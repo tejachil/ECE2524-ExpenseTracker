@@ -2,9 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <QProcess>
 
 namespace Ui {
 class MainWindow;
@@ -20,9 +18,11 @@ public:
     
 private slots:
     void on_btnAdd_clicked();
+    void out();
 
 private:
     Ui::MainWindow *ui;
+     QProcess* roommateProcess ;
 };
 
 #endif // MAINWINDOW_H
