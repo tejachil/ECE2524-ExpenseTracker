@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
-
 import sys
 import argparse
 import fileinput
 import decimal
+import os, inspect
 
 datafile = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/datafiles/expenses"
 
@@ -24,13 +24,11 @@ view_parser.set_defaults(which='view')
 args = vars(parser.parse_args())
 count = 0
 count2 = 0
-count3 = 0
 
 # for viewing expenses
 if(sys.argv[1] == 'view'):
 	view_expenses = []
 	info = open(datafile, 'r')
-	info2 = open(datafile, 'r')
 
 	for line in info.readlines():
 		cols = line.split('\t')
@@ -49,11 +47,10 @@ if(sys.argv[1] == 'view'):
 				count2 = count2 + 1
 			elif exists:
 				view_expenses[ind][1] += float(cols[3][1:].strip())
-				print float(cols[3][1:].strip())
-		print view_expenses	
 	info.close()
 
-	for line in info2.readlines():
+	info = open(datafile, 'r')
+	for line in info.readlines():
 		cols = line.split('\t')
 		if(cols[2] == args['name']):
 			exists = False
@@ -65,14 +62,15 @@ if(sys.argv[1] == 'view'):
 				ind += 1
 			if not exists:
 				view_expenses.append([])
-				view_expenses[count3].append(cols[0])
-				view_expenses[count3].append(-1*float(cols[3][1:].strip()))
+				view_expenses[count2].append(cols[0])
+				view_expenses[count2].append(-1*float(cols[3][1:].strip()))
 				count2 = count2 + 1
 			elif exists:
 				view_expenses[ind][1] -= float(cols[3][1:].strip())
-				print float(cols[3][1:].strip())
-		print view_expenses	
-	info2.close()
+	info.close()
+	print args['name'] + " Expense Summary:"
+	for each in view_expenses:
+		print '\t' + each[0] + " owes " + str(-each[1]) + " dollars."
 
 # for adding expenses
 elif(sys.argv[1] == 'add'):
