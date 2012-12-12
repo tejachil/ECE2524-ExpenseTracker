@@ -5,6 +5,8 @@ import argparse
 import fileinput
 import decimal
 
+datafile = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/datafiles/expenses"
+
 # creating the parser
 parser = argparse.ArgumentParser(description='Expenses')
 subparser = parser.add_subparsers(help='commands')
@@ -27,8 +29,8 @@ count3 = 0
 # for viewing expenses
 if(sys.argv[1] == 'view'):
 	view_expenses = []
-	info = open('./datafiles/expenses', 'r')
-	info2 = open('./datafiles/expenses', 'r')
+	info = open(datafile, 'r')
+	info2 = open(datafile, 'r')
 
 	for line in info.readlines():
 		cols = line.split('\t')
@@ -81,7 +83,7 @@ elif(sys.argv[1] == 'add'):
 	# going through debted roommates to enter into file how much is owed by each
 	while (count < len(debted)):
 		print (debted[count] + ' OWES ' + args['expensed_roommate'] + ' $' + str("%.2f" % amount_owed))
-		open("./datafiles/expenses", "a").write(debted[count] + '\tOWES\t' + args['expensed_roommate'] + '\t$' + str("%.2f" % amount_owed) + '\n')
+		open(datafile, "a").write(debted[count] + '\tOWES\t' + args['expensed_roommate'] + '\t$' + str("%.2f" % amount_owed) + '\n')
 		count = count + 1
 
 # error check
