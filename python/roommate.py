@@ -6,6 +6,7 @@ import fileinput
 import os, inspect
 
 datafile = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/datafiles/roommates"
+datafile2 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/datafiles/expenses"
 
 parser = argparse.ArgumentParser(description='Roommates')
 parser.add_argument('-a', '--add', help='add new roommate')
@@ -37,8 +38,8 @@ if (args['remove']):
 	if not exists:
 		print "'" + args['remove'] + "' does not exist in roommates datafile."
 		exit(1)
-		
 	f.close()
+	
 	f = open(datafile, "r")
 	#data = f.readlines()
 	#print data
@@ -49,6 +50,15 @@ if (args['remove']):
 	f.close()
 	open(datafile, "w").write(data)
 	print "Successfully removed " + args['remove'] + "."
+
+	#delete entries for roommate from expenses
+	expdata = ""
+	f2 = open(datafile2, "r")
+	for line in f2:
+		if not(args['remove'] in line):
+			expdata += line
+	f2.close()
+	open(datafile2, "w").write(expdata)
 
 if args['all']:
 	with open(datafile, 'r') as fin:
