@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QProcess>
 #include <QListWidget>
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;
@@ -37,7 +38,7 @@ private:
     QStringList roommates;
     QListWidgetItem** removeList;
     QListWidgetItem** expenseList;
-
+    QMessageBox msgBox;
 };
 
 #endif // MAINWINDOW_H

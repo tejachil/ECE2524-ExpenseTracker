@@ -54,8 +54,28 @@ void MainWindow::roommateOut(){
         }
         break;
     case ADD:
+        msgBox.setText(newData);
+        if(newData.contains("Successfully")){
+            msgBox.setWindowTitle("Succesfully Added!");
+            msgBox.setIcon(QMessageBox::Information);
+        }
+        else{
+            msgBox.setWindowTitle("Unable to Add!");
+            msgBox.setIcon(QMessageBox::Critical);
+        }
+        msgBox.show();
         break;
     case REMOVE:
+        msgBox.setText(newData);
+        if(newData.contains("Successfully")){
+            msgBox.setWindowTitle("Succesfully Removed!");
+            msgBox.setIcon(QMessageBox::Information);
+        }
+        else{
+            msgBox.setWindowTitle("Unable to Remove!");
+            msgBox.setIcon(QMessageBox::Critical);
+        }
+        msgBox.show();
         break;
     }
 }
@@ -98,6 +118,10 @@ void MainWindow::on_btnAddExpense_clicked(){
     //qDebug() << args;
     expenseProcess->start("python", args);
     expenseProcess->waitForFinished();
+    msgBox.setText("The selected expense was succesfully added to the data file.");
+    msgBox.setWindowTitle("Expense Added!");
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.show();
 }
 
 void MainWindow::expenseOut(){
