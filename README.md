@@ -25,6 +25,21 @@ In order to build the program, run **make** in the base directory (this director
 
 > **Sungha Song**: Implemented the roommates.py python code and got the add roommates, view roommates, and remove roommates functionality to work
 
+## GUI Usage
+After the project is built using the **make** command, open the executable file **ExpenseTracker** either from the terminal or by double clicking on it. The GUI is broken down into three section:
+
+>Roommates
+
+>>Manages the roommates by allowing you to add or remove roommates. The top field adds roommates and the bottom check boxes allow you to select roommates to remove.
+
+>Add Expense
+
+>>Allows users to add expenses. The first combo box allows user to chose the roommate who made the expense. Then, the amount of the expense can be entered in the line edit. Lastly, the user must choose all of the other roommates who owe the paid roommate for that expense. The program will automatically devide and calculate how much each individual owes the roommate. Also note that this application does not have a remove expense feature. Rather, every expense is considered an addition and expenses made against two people cancel eachother out when viewing the expenses.
+
+>View Expense
+
+>>Allows the user to select the roommate for which he or she would like to view the expense summary. When View is pressed for a selected roommate, the application displays how much everyone owes that particular roommate. A negative number means that the selected roommate owes the other person that much money.
+
 ## Python Usage
 ./roommate [-a] ROOMMATE_NAME [-r] ROOMMATE_NAME
 >-a, --add ROOMMATE_NAME
