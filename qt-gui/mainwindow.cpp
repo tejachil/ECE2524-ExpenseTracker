@@ -2,16 +2,19 @@
 #include "ui_mainwindow.h"
 //#include <QDebug>
 
+//Constructor for the main window that initializes the variables
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+	//Allocates memory for the two process objects and connects slots to the signals
     ui->setupUi(this);
     roommateProcess = new QProcess();
     expenseProcess = new QProcess();
     connect(roommateProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(roommateOut()));
     connect(expenseProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(expenseOut()));
     refreshUI();
+    
     setWindowTitle("Roommate Expense Tracker");
 }
 
@@ -20,6 +23,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//Triggered when a new roommate is added
 void MainWindow::on_btnAdd_clicked()
 {
     roommateComm = ADD;
@@ -31,6 +35,7 @@ void MainWindow::on_btnAdd_clicked()
     refreshUI();
 }
 
+//The slot for the roommate process slot that reads the stdout from the roommate python
 void MainWindow::roommateOut(){
     QString newData = roommateProcess->readAllStandardOutput();
     //qDebug() << roommateComm;
@@ -80,6 +85,7 @@ void MainWindow::roommateOut(){
     }
 }
 
+//Refreshes the UI once a specific task is done or action is taken
 void MainWindow::refreshUI(){
     roommateComm = ALL;
     QStringList args;
@@ -92,6 +98,7 @@ void MainWindow::refreshUI(){
     //ui->listRoommates->item(0)->setCheckState(Qt::Unchecked);
 }
 
+//Triggered for removing a roommate
 void MainWindow::on_btnRemove_clicked(){
     roommateComm = REMOVE;
     for (int i = 0; i < roommates.size(); ++i){
@@ -105,6 +112,7 @@ void MainWindow::on_btnRemove_clicked(){
     refreshUI();
 }
 
+//Triggered for adding a new expense
 void MainWindow::on_btnAddExpense_clicked(){
     QStringList args;
     //QString name = ui->comboPaidRoommate->itemData(ui->comboPaidRoommate->currentIndex()).toString();
@@ -124,6 +132,7 @@ void MainWindow::on_btnAddExpense_clicked(){
     msgBox.show();
 }
 
+//Manages the stdout from the expense python script
 void MainWindow::expenseOut(){
     QString newData = expenseProcess->readAllStandardOutput();
     //qDebug() << newData;
@@ -133,6 +142,7 @@ void MainWindow::expenseOut(){
     }
 }
 
+//Triggered to view all the expenses for a person
 void MainWindow::on_btnView_clicked(){
     QStringList args;
     args << "python/expense.py" << "view" << ui->comboViewExpense->currentText();
